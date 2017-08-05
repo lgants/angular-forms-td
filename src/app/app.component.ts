@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -7,11 +7,22 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  suggestUserName() {
-    const suggestedName = 'Superuser';
-  }
+  @ViewChild('f') signupForm: NgForm;
+  // uses one-way property binding to set a default value
+  defaultQuestion = 'pet';
+  answer = '';
+  
+  // suggestUserName() {
+  //   const suggestedName = 'Superuser';
+  // }
 
-  onSubmit(form: NgForm) {
+  // Removed during implementation of ViewChild
+  // onSubmit(form: NgForm) {
+  //   console.log(form)
+  // }
 
+  // uses ViewChild approach, which unlike the other approach, provides access to data before the form is submitted
+  onSubmit() {
+    console.log(this.signupForm);
   }
 }

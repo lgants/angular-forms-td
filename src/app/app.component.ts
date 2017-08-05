@@ -8,13 +8,38 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent {
   @ViewChild('f') signupForm: NgForm;
-  // uses one-way property binding to set a default value
+  // defaultQuestion uses one-way property binding to set a default value
   defaultQuestion = 'pet';
   answer = '';
-  
-  // suggestUserName() {
-  //   const suggestedName = 'Superuser';
-  // }
+  genders = ['male', 'female'];
+  user = {
+    username: '',
+    email: '',
+    secretQuestion: '',
+    answer: '',
+    gender: ''
+  };
+  submitted = false;
+
+  suggestUserName() {
+    const suggestedName = 'Superuser';
+    // setValue sets the value for ALL input controls on the form
+    // this.signupForm.setValue({
+    //   userData: {
+    //     username: suggestedName,
+    //     email: ''
+    //   },
+    //   secret: 'pet',
+    //   questionAnswer: '',
+    //   gender: 'male'
+    // });
+    // patchValue sets the value for ONLY the specified input controls on the form
+    this.signupForm.form.patchValue({
+      userData: {
+        username: suggestedName
+      }
+    });
+  }
 
   // Removed during implementation of ViewChild
   // onSubmit(form: NgForm) {
@@ -23,6 +48,14 @@ export class AppComponent {
 
   // uses ViewChild approach, which unlike the other approach, provides access to data before the form is submitted
   onSubmit() {
-    console.log(this.signupForm);
+    this.submitted = true;
+    this.user.username = this.signupForm.value.userData.username;
+    this.user.email = this.signupForm.value.userData.email;
+    this.user.secretQuestion = this.signupForm.value.secret;
+    this.user.answer = this.signupForm.value.userData.questionAnswer;
+    this.user.gender = this.signupForm.value.gender;
+
+    // reset will reset the form (including state such as valid, touched, etc.)
+    this.signupForm.reset();
   }
 }
